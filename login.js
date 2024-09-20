@@ -1,11 +1,19 @@
-// login.js - Initial version in master branch
+// login.js - Modified version in feature-Login branch
 
-function authenticateUser(username, password) {
-    // Simple authentication logic
-    if (username === 'admin' && password === 'password123') {
-      return true;
+async function authenticateUser(username, password) {
+    // Enhanced authentication logic with API call
+    try {
+      const response = await fetch('/api/authenticate', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+      return data.authenticated;
+    } catch (error) {
+      console.error('Authentication error:', error);
+      return false;
     }
-    return false;
   }
   
   module.exports = { authenticateUser };
